@@ -18,6 +18,10 @@ The purpose of the app is to:
 
 The data showed obvious signs of bimodality (both in the marginal and joint distribution). The app used interactive components to see how the choices in plot elements (e.g. number of bins and plot types) effect the visibility of these features. The last part used an interactive approach for a user to decide the model parameters that fit the data. 
 
+
+
+
+
 #### Creator
 
 Emi Tanaka (emi.tanaka@monash.edu)

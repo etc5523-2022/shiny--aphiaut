@@ -1,0 +1,140 @@
+---
+title: "university"
+author: "Aphiaut Imuan"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+library(ggplot2)
+library(forcats)
+library(RColorBrewer)
+library(treemap)
+library(d3treeR)
+```
+
+```{r}
+library(datasets)
+```
+
+```{r}
+
+```
+
+
+
+
+#### data
+
+```{r data}
+university <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv")
+```
+
+```{r stedent, echo=FALSE, message=FALSE}
+student <- university %>%
+  pivot_longer(cols = "Total":"Women",
+               names_to = "sex",
+               values_to = "number_student") %>%
+  select(Major, Major_category, sex, number_student)
+```
+
+
+```{r studentbar}
+student_bar <- student %>% 
+  group_by(Major_category) %>%
+  filter(Major == "PETROLEUM ENGINEERING") %>%
+  mutate(sex = fct_relevel(sex, 
+            "Total", "Men", "Women")) %>%
+  ggplot(aes(x = sex, y = number_student, fill = sex)) + 
+  geom_bar(stat='identity') 
+
+student_bar
+```
+
+```{r employment_rate, echo=FASLE, warning=FALSE, message=FALSE}
+employment <- university %>%
+  mutate("Employment rate" = 100 - Unemployment_rate) %>%
+  rename("Unemployment rate" = Unemployment_rate)%>%
+  pivot_longer(cols = c("Employment rate","Unemployment rate"),
+               names_to = "employment",
+               values_to = "percentage") %>%
+  select(Major, Major_category, employment, percentage)
+
+```
+
+```{r employment_graph, echo=FASLE, warning=FALSE, message=FALSE}
+employment_graph <- employment %>%
+  group_by(Major_category) %>%
+  filter(Major == "PETROLEUM ENGINEERING") %>%
+  ggplot(aes(x = employment, y = percentage, fill = employment)) + 
+  geom_bar(stat='identity') 
+employment_graph
+```
+
+
+
+
+```{r pie}
+pie_employ <- employment %>%
+  group_by(Major_category) %>%
+  filter(Major == "PETROLEUM ENGINEERING") 
+
+pie_employ$data.label <- sprintf("%s (%.2f%%)", pie_employ$employment, pie_employ$percentage)
+
+
+pie(pie_employ$percentage, labels = pie_employ$data.label, col= c("pink","blue"))
+```
+
+
+```{r employ, echo=FALSE, message=FALSE}
+employ <- university %>%
+  pivot_longer(cols = College_jobs : Low_wage_jobs,
+               names_to = "job",
+               values_to = "number_jobs") %>%
+  select(Major, Major_category, job, number_jobs)
+```
+
+
+```{r employbar}
+employ_bar <- employ %>% 
+  group_by(Major_category) %>%
+  filter(Major == "ACCOUNTING") %>%
+  mutate(job = fct_relevel(job, 
+            "College_jobs", "Non_college_jobs", "Low_wage_jobs")) %>%
+  ggplot(aes(x = job, y = number_jobs, fill = job)) + 
+  geom_bar(stat='identity') 
+
+employ_bar
+```
+
+
+
+
+```{r treemapall}
+treemap(university,
+        index = "Major",
+        vSize = "Median",
+        type = "index")
+```
+
+
+
+```{r faculty}
+faculty <- university %>%
+  filter(Major_category == "Engineering")
+```
+
+```{r treemapfaculty}
+treemap(faculty,
+        index = "Major",
+        vSize = "Median",
+        type = "index")
+```
+
+
