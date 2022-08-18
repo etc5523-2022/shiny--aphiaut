@@ -123,6 +123,17 @@ treemap(university,
         type = "index")
 ```
 
+```{r}
+plot_ly(faculty,
+        labels = ~ paste0(Major, "<br><br>", Median),
+        parents = NA,
+        values = ~ Median,
+        type = 'treemap',
+        hovertemplate = "Major: %{label}<br>Median of income: %{value}<extra></extra>"
+)
+```
+
+
 
 
 ```{r faculty}
