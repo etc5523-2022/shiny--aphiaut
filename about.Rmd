@@ -1,22 +1,25 @@
 
 #### Data
 
-This data shows the waiting time between eruptions
-and the duration of the eruption for the Old Faithful
-geyser in Yellowstone National Park, Wyoming, USA.
-The data source is from Azzalini & Bowman (1990) 
-*"A look at some data on the Old Faithful geyser." Applied Statistics*, 39, 357–365.
+This data illustrates the rank of major by median income after student graduate in the USA and behinds 
+[the story The Economic Guide To Picking A College Major](https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/).
+
+The original data and more can find at [here](https://www.census.gov/programs-surveys/acs/microdata.html).
 
 
 #### Purpose
 
 The purpose of the app is to:
 
-1. show how the number of bins in a histogram reveals/hides the bimodality in the data,
-2. show how the different plot choices make certain features of data more striking, and 
-3. interactively estimate the best parameters for the mixture of two normal distributions to the data. 
+1. show the data of median income. -*-
+2. help high school students or someone who don't know what major is you want to study, but want to get preference rate of salary after graduated.
+3. visualise the data to be a simple pattern and easy for normal people to understand.
 
-The data showed obvious signs of bimodality (both in the marginal and joint distribution). The app used interactive components to see how the choices in plot elements (e.g. number of bins and plot types) effect the visibility of these features. The last part used an interactive approach for a user to decide the model parameters that fit the data. 
+The data showed 
+
+The app used interactive components to see the rank of data in table and can search the major in the box in the section1. Section 2 will  interact with user by choose the major category and show the comparing data by tree chart. Next section wants to show the number of students in each major and it can help to decide the employment rate section because if the unemployment rate is low, it doesn't mean the number of unemployed will be low when total of students are low. The last section want to show the number of jobs that require the degree of major or not.
+
+
 
 
 
@@ -24,7 +27,7 @@ The data showed obvious signs of bimodality (both in the marginal and joint dist
 
 #### Creator
 
-Emi Tanaka (emi.tanaka@monash.edu)
+Aphiaut Imuan (aimu0001@student.monash.edu)
 
 <details>
 <summary>Session information</summary>

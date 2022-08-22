@@ -149,3 +149,39 @@ treemap(faculty,
 ```
 
 
+```{r}
+fulltime <- university %>%
+  mutate(fulltime_rate = (Full_time/(Full_time + Part_time))*100) %>%
+  group_by(Major_category)%>%
+  filter(Major_category == "Business")%>%
+  ggplot(aes(x = Median, y = fulltime_rate)) +
+  geom_point(aes(colour = Major), size = 4) +
+  geom_point(colour = "grey90", size = 1.5) +
+  ylab("Full-Time Rate") +
+  ggtitle("Fulltime Employment Rate vs Median Income")+
+               theme(legend.position="bottom",
+                     legend.text = element_text(size = 4))
+
+fulltime
+  
+```
+
+```{r}
+library(ggthemes)
+boxplot <- university %>%
+  group_by(Major_category) %>%
+  ggplot(aes(x = Major_category, y = Median, fill = Major_category))+
+  geom_boxplot(color = "black",
+                   size = 1,
+                   width = 0.3) +
+      theme_hc() +
+      theme(
+        legend.title = element_blank(),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank()
+      )
+boxplot <- ggplotly(boxplot + coord_flip(), tooltip = ("Median"))
+    hide_legend(boxplot)
+```
+
+

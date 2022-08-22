@@ -19,3 +19,10 @@ details > summary:first-of-type {
     counter-increment: list-item 0;
     list-style: inside disclosure-closed;
 }
+
+h4{
+                display: list-item;
+                list-style-type: disc;
+                list-style-position: inside;
+                text-indent: -1em;
+                padding-left: 1em;}
