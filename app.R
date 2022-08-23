@@ -384,7 +384,6 @@ server <- function(input, output) {
       ggplotly(ggplot(data = employ_bar, aes(x = Job, y = number_jobs, fill = Job)) +
       geom_bar(stat='identity') +
       ggtitle("The number of jobs that require the major degree")+
-      theme(plot.title = element_text(hjust = 0.5))+
       scale_fill_manual(values=c("#F3C0A1", "#C7E3A4")) +
       scale_y_continuous(labels = scales::comma)+
       xlab("Job") +
@@ -408,8 +407,7 @@ server <- function(input, output) {
       axis.title.y = element_blank()
     )+
     ylab("US dollar")+
-    ggtitle("Median Income Comparison") +
-    theme(plot.title = element_text(hjust = 0.5))
+    ggtitle("Median Income Comparison")
   boxplot <- ggplotly(boxplot + coord_flip(), tooltip = ("Median"))
   hide_legend(boxplot)
   })
@@ -430,9 +428,9 @@ server <- function(input, output) {
                geom_segment( aes(x=Major, xend=Major, y=0, yend=percent), color="skyblue") +
                geom_point( color="#F4EEB1", size=4, alpha=0.6) +
                ggtitle("Percentage of Full-time Employment") +
-               theme(plot.title = element_text(hjust = 0.5))+
                xlab("")+
                ylab("Percentage")+
+               ylim(0,100)+
                theme_light() +
                coord_flip() +
                theme(
@@ -466,9 +464,8 @@ server <- function(input, output) {
                ylab("Full-Time Rate") +
                xlab("US dollar")+
                ggtitle("Fulltime Employment Rate vs Median Income") +
-               theme(plot.title = element_text(hjust = 0.5))+
                theme(legend.position="bottom",
-                     legend.text = element_text(size = 4))+
+                     legend.text = element_text(size = 10))+
                scale_x_continuous(labels = scales::comma))
 
   })
