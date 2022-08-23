@@ -11,6 +11,7 @@ library(DT)
 library(shinythemes)
 library(ggthemes)
 
+
 # Load data
 
 university <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv")
@@ -38,13 +39,10 @@ ui <- navbarPage(
 
         sidebarLayout(
           sidebarPanel(
-            # ------------------
-            # Data overview filters
-            # ------------------
 
             h3("Data Overview"),
             tags$br(),
-            #setSliderColor(c("#2c3e50 ", "#2c3e50"), c(1, 2)),
+
             sliderInput(
               "incomeRange",
               label = "Mediean Income Range",
@@ -56,6 +54,7 @@ ui <- navbarPage(
             sliderInput(
               "employRange",
               label = "Employment Rate Range",
+              round = -2, step = 0.01,
               min = 90,
               max = 100,
               value = c(90, 100)
@@ -166,7 +165,7 @@ ui <- navbarPage(
         fluidRow(
           column(3),
           column(6,
-                 shiny::HTML("<br><br><center> <h1>Percentage of Fulltime Employment</h1> </center><br>")
+                 shiny::HTML("<br><br><center> <h1>Percentage of Full-time Employment</h1> </center><br>")
           ),
           column(3),
           sidebarLayout(
@@ -188,7 +187,7 @@ ui <- navbarPage(
         fluidRow(
           column(3),
           column(6,
-                 shiny::HTML("<br><br><center> <h1>Fulltime Employment Rate vs Median Income</h1> </center><br>")
+                 shiny::HTML("<br><br><center> <h1>Full-time Employment Rate vs Median Income</h1> </center><br>")
           ),
           column(3),
           sidebarLayout(
@@ -226,7 +225,8 @@ ui <- navbarPage(
                        </h5></p>")
 
                            ),
-                           column(3)
+                           column(3),
+                           includeCSS("styles.css")
                          ),
 
                          fluidRow(
@@ -248,7 +248,8 @@ ui <- navbarPage(
                                                 includeCSS("styles.css")
                          )
                )
-      )
+      ),
+  includeCSS("styles.css")
 )
 
 
@@ -265,7 +266,7 @@ server <- function(input, output) {
       maxEmploy <- input$employRange[2]
     })
     university %>%
-      mutate("Employment_rate" = 100 - Unemployment_rate) %>%
+      mutate("Employment_rate" = 100 - round(Unemployment_rate,2)) %>%
     filter(Median > minIncome,
            Median < maxIncome) %>%
       filter(Employment_rate > minEmploy,
@@ -303,7 +304,9 @@ server <- function(input, output) {
             values = ~ Median,
             type = 'treemap',
             hovertemplate = "Major: %{label}<br>Median income: %{value}<extra></extra>",
-            textposition = "middle center")
+            textposition = "middle center",
+            fontcolor.labels="white",
+            fontsize.labels=48)
   })
 
 
@@ -381,6 +384,7 @@ server <- function(input, output) {
       ggplotly(ggplot(data = employ_bar, aes(x = Job, y = number_jobs, fill = Job)) +
       geom_bar(stat='identity') +
       ggtitle("The number of jobs that require the major degree")+
+      theme(plot.title = element_text(hjust = 0.5))+
       scale_fill_manual(values=c("#F3C0A1", "#C7E3A4")) +
       scale_y_continuous(labels = scales::comma)+
       xlab("Job") +
@@ -403,7 +407,9 @@ server <- function(input, output) {
       axis.title.x = element_blank(),
       axis.title.y = element_blank()
     )+
-    ggtitle("Median Income Comparison")
+    ylab("US dollar")+
+    ggtitle("Median Income Comparison") +
+    theme(plot.title = element_text(hjust = 0.5))
   boxplot <- ggplotly(boxplot + coord_flip(), tooltip = ("Median"))
   hide_legend(boxplot)
   })
@@ -422,7 +428,11 @@ server <- function(input, output) {
 
     ggplotly(ggplot(data = percentage, aes(x = Major, y = percent)) +
                geom_segment( aes(x=Major, xend=Major, y=0, yend=percent), color="skyblue") +
-               geom_point( color="blue", size=4, alpha=0.6) +
+               geom_point( color="#F4EEB1", size=4, alpha=0.6) +
+               ggtitle("Percentage of Full-time Employment") +
+               theme(plot.title = element_text(hjust = 0.5))+
+               xlab("")+
+               ylab("Percentage")+
                theme_light() +
                coord_flip() +
                theme(
@@ -454,7 +464,9 @@ server <- function(input, output) {
                geom_point(aes(colour = Major), size = 4) +
                geom_point(colour = "grey90", size = 1.5) +
                ylab("Full-Time Rate") +
+               xlab("US dollar")+
                ggtitle("Fulltime Employment Rate vs Median Income") +
+               theme(plot.title = element_text(hjust = 0.5))+
                theme(legend.position="bottom",
                      legend.text = element_text(size = 4))+
                scale_x_continuous(labels = scales::comma))

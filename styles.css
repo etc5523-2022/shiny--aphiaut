@@ -10,8 +10,14 @@
 }
 
 h3 {
-  color: #006DAE;
+  color: #6FB3B8;
   font-size: 1.5em;
+}
+
+h5 {
+  color: #6FB3B8;
+  font-size: 14px;
+  text-align: justify;
 }
 
 details > summary:first-of-type {
@@ -20,9 +26,59 @@ details > summary:first-of-type {
     list-style: inside disclosure-closed;
 }
 
-h4{
-                display: list-item;
-                list-style-type: disc;
-                list-style-position: inside;
-                text-indent: -1em;
-                padding-left: 1em;}
+
+h1 {
+  color: #388087;
+  font-size: 2em;
+}
+
+
+body {
+  background-color:#F6F6F2;
+}
+
+.navbar-default {
+    background-color: #388087;
+    border-color: transparent;
+}
+
+table.dataTable tbody tr {
+    background-color: #F6F6F2;
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+    color: #6FB3B8;
+}
+
+
+
+.irs-bar {
+    top: 25px;
+    height: 8px;
+    border-top: 1px solid #6FB3B8;
+    border-bottom: 1px solid #6FB3B8;
+    background: #6FB3B8;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.well {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #e3e3e3;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+}
